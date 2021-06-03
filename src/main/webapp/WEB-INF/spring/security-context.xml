@@ -39,6 +39,21 @@
 		<access-denied-handler error-page="/login/accessDenied.do" />
 		<csrf/>
 		
+		<!-- 자동 로그인 기능 -->
+		<!-- 
+			 key : Hash 암/복호화에 사용할 키 값
+  			- token-validity-seconds : 토큰 유효 기간
+  			- authentication-success-handler-ref : 핸들러를 커스마이징 했다면 로그인 성공 후 수행할 로직 
+  			- user-service-ref : UserDetailsService를 커스터마이징 했을 경우 주입
+  			Success Handler는 수동 로그인할 때 커스터마이징 했던 Bean(클래스)을 그대로 사용해도 되고 따로 하나 만들어서 분리해도 됩니다. 
+  			안해주면 핸들러를 커스터마이징 했더라도 성공 후 아무 로직도 수행하지 않습니다.
+  			또 user-service-ref에는 DB에서 인증 데이터를 가져오는 UserDetailsService 구현체를 커스터마이징 했을 경우 Bean 주입해주는 설정인데, 만약 인증 로직의 Provider 구현체를 커스터마이징하면서 @AutoWired 등으로 자동 DI를 했다면 해당 Bean을 가져다 사용합니다. 
+  			따라서 Provider 커스터마이징 했을 경우 굳이 등록해주지 않아도 되는 설정입니다. 
+		 -->
+		
+		<remember-me key="hsweb" token-validity-seconds="60000"
+			authentication-success-handler-ref=""/>
+		
 		<!-- 로그아웃 invalidate-session="true" 세션 끊기-->
 		<logout logout-url="/logout" logout-success-url="/" invalidate-session="true"/>
 	</http>
