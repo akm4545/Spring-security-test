@@ -38,6 +38,9 @@
 		<!-- 접근 불가 페이지 -->
 		<access-denied-handler error-page="/login/accessDenied.do" />
 		<csrf disabled="true"/>
+		
+		<!-- 로그아웃 invalidate-session="true" 세션 끊기-->
+		<logout logout-url="/logout" logout-success-url="/" invalidate-session="true"/>
 	</http>
 	<!-- 
 		<authentication-manager> : 유저들의 권한을 설정한다. 
@@ -48,12 +51,40 @@
 		만약 다른 네임 규칙을 정하고 싶다면 <authentication-provider> 태그 내에 role-prefix 
 		옵션을 통해 변경할 수 있다.
 	 -->
+	<!-- 
 	<authentication-manager>
 		<authentication-provider>
 			<user-service>
 				<user name="admin" password="1234" authorities="ROLE_USER, ROLE_ADMIN" />
 				<user name="guest" password="1234" authorities="ROLE_USER" />
 			</user-service>
+		</authentication-provider>
+	</authentication-manager>
+	 -->
+	 <!-- 
+		 <jdbc-user-service data-source-ref="dataSource" /> : root-context.xml에서 설정한 bean id를 가져온다.
+		  user-by-username-query : 사용자 인증을 가져온다. username, password, enabled 컬럼은 필수이다. 이는 스프링에서 지정된 컬럼명이며 만일 테이블 커럶과 다른 경우 별칭(AS)을 줘서 변경하도록 한다. 
+		  Enabled 필드 값이 0이면 비활성이고 1이면 활성을 의미한다.
+		  authorities-by-username-query : 권한 인증을 가져온다. Authority 필드 값은 "ROLE_ADMIN" 이나 "ROLE_USER"가 오도록 한다.	 
+	  -->
+	 <authentication-manager>
+		<authentication-provider>
+			<jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query="SELECT MEMBER_ID AS username,
+					MEMBER_PWD AS PASSWORD,
+					1 AS enabled
+					FROM ST WHERE MEMBER_ID = ?"
+				authorities-by-username-query="SELECT MEMBER_ID AS username,
+					CASE WHEN 
+						MEMBER_GRADE = 1
+					THEN 
+						'ROLE_ADMIN'
+					ELSE 
+						'ROLE_USER'
+					END
+						authority
+					FROM ST WHERE MEMBER_ID = ?"
+			/>
 		</authentication-provider>
 	</authentication-manager>
 	
