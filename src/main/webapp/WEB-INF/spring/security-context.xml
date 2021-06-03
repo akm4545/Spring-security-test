@@ -37,7 +37,7 @@
 		
 		<!-- 접근 불가 페이지 -->
 		<access-denied-handler error-page="/login/accessDenied.do" />
-		<csrf disabled="true"/>
+		<csrf/>
 		
 		<!-- 로그아웃 invalidate-session="true" 세션 끊기-->
 		<logout logout-url="/logout" logout-success-url="/" invalidate-session="true"/>

@@ -98,5 +98,11 @@ public class CustomUserDetails implements UserDetails{
 	public boolean isEnabled() {
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "CustomUserDetails [id=" + id + ", password=" + password + ", name=" + name + ", auth=" + auth
+				+ ", enabled=" + enabled + ", memberGrade=" + memberGrade + "]";
+	}
 	
 }

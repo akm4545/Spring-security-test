@@ -72,6 +72,8 @@
 				<p style="color: red">ID와 Password를 확인해주세요.</p>
 			</c:if>
 			<p class="mt-5 mb-3 text-muted">shxrecord.tistory.com</p>
+			<sec:csrfInput/> 
+			<!-- CSRF 설정을 적용한 뒤부터는 모든 POST 방식의 데이터 전송에 토큰 값이 있어야 합니다. GET 방식에는 적용되지 않습니다. 만약 POST 전송 데이터에 유효한 Token값이 없다면 권한이 없는 페이지에 접근할 때와 동일하게 에러 페이지로 이동됩니다.  -->
 		</form>
 	</body>
 </html>
