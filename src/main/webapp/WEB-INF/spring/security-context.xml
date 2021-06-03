@@ -67,6 +67,7 @@
 		  Enabled 필드 값이 0이면 비활성이고 1이면 활성을 의미한다.
 		  authorities-by-username-query : 권한 인증을 가져온다. Authority 필드 값은 "ROLE_ADMIN" 이나 "ROLE_USER"가 오도록 한다.	 
 	  -->
+	  <!-- 직접 DB연결
 	 <authentication-manager>
 		<authentication-provider>
 			<jdbc-user-service data-source-ref="dataSource"
@@ -87,5 +88,12 @@
 			/>
 		</authentication-provider>
 	</authentication-manager>
+	-->
 	
+	<authentication-manager>
+    	<authentication-provider user-service-ref="userService"/>
+	</authentication-manager>
+        
+	<beans:bean id="userService" class="com.company.board.custom.CustomUserDetailsService"/>
+
 </beans:beans>

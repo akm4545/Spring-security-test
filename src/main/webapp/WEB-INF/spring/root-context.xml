@@ -17,9 +17,13 @@
     
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
+		<property name="mapperLocations" value="classpath:/mappers/user_sql.xml" />
 	</bean>
-	
+ 	
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" lazy-init="true">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
+	
+	<!-- MapperConfigurer setup for MyBatis Database Layer with @Mapper("deptMapper") in DeptMapper Interface -->
+	<mybatis-spring:scan base-package="com.company.board"/>
 </beans>
