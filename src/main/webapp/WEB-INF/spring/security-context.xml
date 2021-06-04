@@ -50,10 +50,16 @@
   			또 user-service-ref에는 DB에서 인증 데이터를 가져오는 UserDetailsService 구현체를 커스터마이징 했을 경우 Bean 주입해주는 설정인데, 만약 인증 로직의 Provider 구현체를 커스터마이징하면서 @AutoWired 등으로 자동 DI를 했다면 해당 Bean을 가져다 사용합니다. 
   			따라서 Provider 커스터마이징 했을 경우 굳이 등록해주지 않아도 되는 설정입니다. 
 		 -->
+		 <!-- 
+			<remember-me key="hsweb" token-validity-seconds="60000"
+				authentication-success-handler-ref=""/> 
+		  -->
 		
-		<remember-me key="hsweb" token-validity-seconds="60000"
-			authentication-success-handler-ref=""/>
-		
+		<!-- DB와 쿠키를 이용한  자동 로그인 방식 -->
+		<remember-me data-source-ref="dataSource"
+			key="codevang"
+			authentication-success-handler-ref="" />
+			
 		<!-- 로그아웃 invalidate-session="true" 세션 끊기-->
 		<logout logout-url="/logout" logout-success-url="/" invalidate-session="true"/>
 	</http>
